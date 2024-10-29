@@ -8,4 +8,14 @@ class LightAppStyle {
     fontWeight: FontWeight.w700,
     color: ColorsManager.white,
   );
+  static TextStyle settingsTabLabel = GoogleFonts.poppins(
+    fontSize: 16,
+    fontWeight: FontWeight.w700,
+    color: ColorsManager.black,
+  );
+  static TextStyle settingsTabSelectedItem = GoogleFonts.inter(
+    color: ColorsManager.blue,
+    fontSize: 16,
+    fontWeight: FontWeight.w400,
+  );
 }
