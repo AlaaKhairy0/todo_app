@@ -58,8 +58,9 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       );
+
   Widget buildFAB() => FloatingActionButton(
-    onPressed: () {},
-    child: const Icon(Icons.add),
-  );
+        onPressed: () {},
+        child: const Icon(Icons.add),
+      );
 }

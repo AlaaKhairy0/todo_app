@@ -4,6 +4,11 @@ import 'package:todo_app/core/utils/colors_manager.dart';
 
 class AppTheme {
   static ThemeData light = ThemeData(
+    colorScheme: ColorScheme.fromSeed(
+      seedColor: ColorsManager.blue,
+      primary: ColorsManager.blue,
+      onPrimary: ColorsManager.white,
+    ),
     scaffoldBackgroundColor: ColorsManager.scaffoldBg,
     appBarTheme: AppBarTheme(
       color: ColorsManager.blue,
@@ -21,10 +26,9 @@ class AppTheme {
       unselectedIconTheme: IconThemeData(size: 36),
     ),
     bottomAppBarTheme: const BottomAppBarTheme(
-      shape: CircularNotchedRectangle(),
-      color: ColorsManager.white
-    ),
+        shape: CircularNotchedRectangle(), color: ColorsManager.white),
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
+        backgroundColor: ColorsManager.blue,
         iconSize: 28,
         shape: StadiumBorder(
           side: BorderSide(
