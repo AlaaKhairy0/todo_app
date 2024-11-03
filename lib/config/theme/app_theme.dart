@@ -4,38 +4,46 @@ import 'package:todo_app/core/utils/colors_manager.dart';
 
 class AppTheme {
   static ThemeData light = ThemeData(
-    colorScheme: ColorScheme.fromSeed(
-      seedColor: ColorsManager.blue,
-      primary: ColorsManager.blue,
-      onPrimary: ColorsManager.white,
-    ),
-    scaffoldBackgroundColor: ColorsManager.scaffoldBg,
-    appBarTheme: AppBarTheme(
-      color: ColorsManager.blue,
-      titleTextStyle: LightAppStyle.appBar,
-    ),
-    bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-      type: BottomNavigationBarType.fixed,
-      elevation: 0,
-      backgroundColor: Colors.transparent,
-      showUnselectedLabels: false,
-      showSelectedLabels: true,
-      unselectedItemColor: ColorsManager.grey,
-      selectedItemColor: ColorsManager.blue,
-      selectedIconTheme: IconThemeData(size: 36),
-      unselectedIconTheme: IconThemeData(size: 36),
-    ),
-    bottomAppBarTheme: const BottomAppBarTheme(
-        shape: CircularNotchedRectangle(), color: ColorsManager.white),
-    floatingActionButtonTheme: const FloatingActionButtonThemeData(
-        backgroundColor: ColorsManager.blue,
-        iconSize: 28,
-        shape: StadiumBorder(
-          side: BorderSide(
-            color: ColorsManager.white,
-            width: 4,
+      colorScheme: ColorScheme.fromSeed(
+        seedColor: ColorsManager.blue,
+        primary: ColorsManager.blue,
+        onPrimary: ColorsManager.white,
+      ),
+      scaffoldBackgroundColor: ColorsManager.scaffoldBg,
+      appBarTheme: AppBarTheme(
+        color: ColorsManager.blue,
+        titleTextStyle: LightAppStyle.appBar,
+      ),
+      bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+        type: BottomNavigationBarType.fixed,
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        showUnselectedLabels: false,
+        showSelectedLabels: true,
+        unselectedItemColor: ColorsManager.grey,
+        selectedItemColor: ColorsManager.blue,
+        selectedIconTheme: IconThemeData(size: 36),
+        unselectedIconTheme: IconThemeData(size: 36),
+      ),
+      bottomAppBarTheme: const BottomAppBarTheme(
+          shape: CircularNotchedRectangle(), color: ColorsManager.white),
+      floatingActionButtonTheme: const FloatingActionButtonThemeData(
+          backgroundColor: ColorsManager.blue,
+          iconSize: 28,
+          shape: StadiumBorder(
+            side: BorderSide(
+              color: ColorsManager.white,
+              width: 4,
+            ),
+          )),
+      bottomSheetTheme: const BottomSheetThemeData(
+        backgroundColor: ColorsManager.white,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            topRight: Radius.circular(15),
+            topLeft: Radius.circular(15),
           ),
-        )),
-  );
+        ),
+      ));
   static ThemeData dark = ThemeData();
 }
