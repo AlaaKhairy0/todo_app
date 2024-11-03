@@ -18,4 +18,29 @@ class LightAppStyle {
     fontSize: 16,
     fontWeight: FontWeight.w400,
   );
+  static TextStyle bottomSheetTitle = GoogleFonts.poppins(
+    color: ColorsManager.black,
+    fontWeight: FontWeight.w700,
+    fontSize: 18,
+  );
+  static TextStyle textFieldHint = GoogleFonts.inter(
+    color: ColorsManager.hint,
+    fontSize: 16,
+    fontWeight: FontWeight.w400,
+  );
+  static TextStyle date = GoogleFonts.inter(
+    color: ColorsManager.black,
+    fontSize: 16,
+    fontWeight: FontWeight.w600,
+  );
+  static TextStyle taskItemTitle = GoogleFonts.poppins(
+    color: ColorsManager.blue,
+    fontSize: 18,
+    fontWeight: FontWeight.w700,
+  );
+  static TextStyle taskItemDescription = GoogleFonts.poppins(
+    color: ColorsManager.black,
+    fontSize: 16,
+    fontWeight: FontWeight.w600,
+  );
 }
