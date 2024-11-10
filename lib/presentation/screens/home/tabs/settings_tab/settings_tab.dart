@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:todo_app/core/utils/app_styles.dart';
 import 'package:todo_app/core/utils/colors_manager.dart';
 
@@ -16,7 +17,7 @@ class _SettingsTabState extends State<SettingsTab> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: REdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -24,8 +25,8 @@ class _SettingsTabState extends State<SettingsTab> {
             'Language',
             style: LightAppStyle.settingsTabLabel,
           ),
-          const SizedBox(
-            height: 10,
+          SizedBox(
+            height: 10.h,
           ),
           buildSettingsTabComponent(
               item: MenuItem(item1: 'English', item2: 'العربية'),
@@ -35,15 +36,15 @@ class _SettingsTabState extends State<SettingsTab> {
                   selectedLanguage = newLang ?? selectedLanguage;
                 });
               }),
-          const SizedBox(
-            height: 16,
+          SizedBox(
+            height: 16.h,
           ),
           Text(
             'Mode',
             style: LightAppStyle.settingsTabLabel,
           ),
-          const SizedBox(
-            height: 10,
+          SizedBox(
+            height: 10.h,
           ),
           buildSettingsTabComponent(
               item: MenuItem(item1: 'Light', item2: 'Dark'),
@@ -63,7 +64,7 @@ class _SettingsTabState extends State<SettingsTab> {
           required String selectedItem,
           required Function(String?) onSelected}) =>
       Container(
-        padding: const EdgeInsets.all(10),
+        padding: REdgeInsets.all(10),
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.onPrimary,
           border: Border.all(
