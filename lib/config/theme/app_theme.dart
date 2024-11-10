@@ -11,6 +11,7 @@ class AppTheme {
       ),
       scaffoldBackgroundColor: ColorsManager.scaffoldBg,
       appBarTheme: AppBarTheme(
+        elevation: 0,
         color: ColorsManager.blue,
         titleTextStyle: LightAppStyle.appBar,
       ),
