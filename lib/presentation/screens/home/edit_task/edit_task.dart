@@ -7,6 +7,7 @@ import 'package:todo_app/core/utils/colors_manager.dart';
 import 'package:todo_app/core/utils/date_ex/date_ex.dart';
 import 'package:todo_app/core/utils/routes_manager.dart';
 import 'package:todo_app/database_manager/model/todo_dm.dart';
+import 'package:todo_app/database_manager/model/user_dm.dart';
 
 class EditTask extends StatefulWidget {
   const EditTask({super.key, required this.todo});
@@ -103,8 +104,7 @@ class _EditTaskState extends State<EditTask> {
                 child: ElevatedButton(
               onPressed: () {
                 editTaskOnFireStore(widget.todo);
-                Navigator.pushReplacementNamed(
-                    context, RoutesManager.homeRoute);
+                Navigator.pushReplacementNamed(context, RoutesManager.home);
               },
               style: ButtonStyle(
                   padding: MaterialStatePropertyAll(REdgeInsets.symmetric(
@@ -143,8 +143,10 @@ class _EditTaskState extends State<EditTask> {
   }
 
   editTaskOnFireStore(ToDoDM todo) async {
-    CollectionReference collectionReference =
-        FirebaseFirestore.instance.collection(ToDoDM.collectionName);
+    CollectionReference collectionReference = FirebaseFirestore.instance
+        .collection(UserDM.collectionName)
+        .doc(UserDM.currentUser!.id)
+        .collection(ToDoDM.collectionName);
     DocumentReference documentReference = collectionReference.doc(todo.id);
     await documentReference.update({
       'title': titleController.text,

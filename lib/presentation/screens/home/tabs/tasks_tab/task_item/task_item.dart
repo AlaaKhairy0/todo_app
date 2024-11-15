@@ -4,8 +4,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:todo_app/core/utils/app_styles.dart';
 import 'package:todo_app/core/utils/colors_manager.dart';
+import 'package:todo_app/core/utils/dialogs/dialogs.dart';
 import 'package:todo_app/core/utils/routes_manager.dart';
 import 'package:todo_app/database_manager/model/todo_dm.dart';
+import 'package:todo_app/database_manager/model/user_dm.dart';
 import 'package:todo_app/presentation/screens/home/edit_task/edit_task.dart';
 
 class TaskItem extends StatelessWidget {
@@ -38,8 +40,16 @@ class TaskItem extends StatelessWidget {
                 label: 'Delete',
                 backgroundColor: ColorsManager.red,
                 onPressed: (context) {
-                  deleteTaskFromFireStore(todo);
-                  onDelete();
+                  MyDialog.showMessage(
+                    context,
+                    body: 'Are you sure you want to delete the task',
+                    posActionTitle: 'Yes',
+                    negActionTitle: 'Cancel',
+                    posAction: () {
+                      deleteTaskFromFireStore(context, todo);
+                      onDelete();
+                    },
+                  );
                 },
               ),
               SlidableAction(
@@ -118,10 +128,20 @@ class TaskItem extends StatelessWidget {
     );
   }
 
-  Future<void> deleteTaskFromFireStore(ToDoDM todo) async {
-    CollectionReference collectionReference =
-        FirebaseFirestore.instance.collection(ToDoDM.collectionName);
+  Future<void> deleteTaskFromFireStore(
+      BuildContext context, ToDoDM todo) async {
+    // if (context.mounted){
+    //   MyDialog.showLoading(context,text: 'Waiting...');
+    // }
+    CollectionReference collectionReference = FirebaseFirestore.instance
+        .collection(UserDM.collectionName)
+        .doc(UserDM.currentUser!.id)
+        .collection(ToDoDM.collectionName);
     DocumentReference documentReference = collectionReference.doc(todo.id);
     await documentReference.delete();
+    // if(context.mounted){
+    //   MyDialog.hide(context);
+    //   MyDialog.showMessage(context,posActionTitle: 'Ok',body: 'Task deleted successfully');
+    // }
   }
 }
