@@ -53,4 +53,24 @@ class LightAppStyle {
     fontSize: 20.sp,
     fontWeight: FontWeight.w700,
   );
+  static TextStyle authHint = GoogleFonts.poppins(
+    color: ColorsManager.black.withOpacity(.7),
+    fontWeight: FontWeight.w400,
+    fontSize: 16.sp,
+  );
+  static TextStyle authTitle = GoogleFonts.poppins(
+    color: ColorsManager.white,
+    fontWeight: FontWeight.w600,
+    fontSize: 18.sp,
+  );
+  static TextStyle authButton = GoogleFonts.poppins(
+    color: ColorsManager.blue,
+    fontWeight: FontWeight.w600,
+    fontSize: 20.sp,
+  );
+  static TextStyle haveAccount = GoogleFonts.poppins(
+    color: ColorsManager.white,
+    fontWeight: FontWeight.w500,
+    fontSize: 16.sp,
+  );
 }

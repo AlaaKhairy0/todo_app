@@ -6,6 +6,7 @@ import 'package:todo_app/core/utils/app_styles.dart';
 import 'package:todo_app/core/utils/colors_manager.dart';
 import 'package:todo_app/core/utils/date_ex/date_ex.dart';
 import 'package:todo_app/database_manager/model/todo_dm.dart';
+import 'package:todo_app/database_manager/model/user_dm.dart';
 import 'package:todo_app/presentation/screens/home/tabs/tasks_tab/task_item/task_item.dart';
 
 class TasksTab extends StatefulWidget {
@@ -58,9 +59,11 @@ class TasksTabState extends State<TasksTab> {
       firstDate: DateTime.now().subtract(const Duration(days: 365)),
       focusDate: selectedDate,
       lastDate: DateTime.now().add(const Duration(days: 365)),
-      itemBuilder: (context, date, isSelected, onTap) => InkWell(
+      itemBuilder:
+          (context, dayNumber, dayName, monthName, fullDate, isSelected) =>
+              InkWell(
         onTap: () {
-          selectedDate = date;
+          selectedDate = fullDate;
           getTasksFromFireStore();
         },
         child: Card(
@@ -72,7 +75,7 @@ class TasksTabState extends State<TasksTab> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  date.getDaysName,
+                  fullDate.getDaysName,
                   style: isSelected
                       ? LightAppStyle.selectedDate
                       : LightAppStyle.unselectedDate,
@@ -81,7 +84,7 @@ class TasksTabState extends State<TasksTab> {
                   height: 14.h,
                 ),
                 Text(
-                  '${date.day}',
+                  '${fullDate.day}',
                   style: isSelected
                       ? LightAppStyle.selectedDate
                       : LightAppStyle.unselectedDate,
@@ -93,8 +96,10 @@ class TasksTabState extends State<TasksTab> {
   }
 
   void getTasksFromFireStore() async {
-    CollectionReference collectionReference =
-        FirebaseFirestore.instance.collection(ToDoDM.collectionName);
+    CollectionReference collectionReference = FirebaseFirestore.instance
+        .collection(UserDM.collectionName)
+        .doc(UserDM.currentUser!.id)
+        .collection(ToDoDM.collectionName);
     QuerySnapshot collectionSnapShot = await collectionReference
         .where('dateTime',
             isEqualTo: selectedDate.copyWith(

@@ -2,7 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:todo_app/core/utils/app_styles.dart';
 import 'package:todo_app/core/utils/date_ex/date_ex.dart';
+import 'package:todo_app/core/utils/dialogs/dialogs.dart';
 import 'package:todo_app/database_manager/model/todo_dm.dart';
+import 'package:todo_app/database_manager/model/user_dm.dart';
 
 class AddTaskBottomSheet extends StatefulWidget {
   const AddTaskBottomSheet({super.key});
@@ -20,6 +22,10 @@ class AddTaskBottomSheet extends StatefulWidget {
         child: const AddTaskBottomSheet(),
       ),
     );
+  }
+
+  static hide(context) {
+    Navigator.pop(context);
   }
 }
 
@@ -93,6 +99,7 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
           ElevatedButton(
             onPressed: () {
               addTaskToFireStore();
+              MyDialog.showLoading(context, text: 'Waiting...');
             },
             child: const Text('Add Task'),
           ),
@@ -113,8 +120,10 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
 
   void addTaskToFireStore() {
     if (formKey.currentState!.validate() == false) return;
-    CollectionReference collectionReference =
-        FirebaseFirestore.instance.collection(ToDoDM.collectionName);
+    CollectionReference collectionReference = FirebaseFirestore.instance
+        .collection(UserDM.collectionName)
+        .doc(UserDM.currentUser!.id)
+        .collection(ToDoDM.collectionName);
     DocumentReference documentReference = collectionReference.doc();
     ToDoDM task = ToDoDM(
         id: documentReference.id,
@@ -128,12 +137,31 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
           millisecond: 0,
           microsecond: 0,
         ));
-    documentReference.set(task.toFireStore()).timeout(
-      const Duration(milliseconds: 500),
+    documentReference.set(task.toFireStore()).then((value) {
+      if (context.mounted) {
+        MyDialog.hide(context);
+        MyDialog.showMessage(
+          context,
+          body: 'Task added successfully',
+          posActionTitle: 'Ok',
+          posAction: () => AddTaskBottomSheet.hide(context),
+        );
+      }
+    }).timeout(
+      const Duration(seconds: 4),
       onTimeout: () {
-        if (context.mounted) {
-          Navigator.pop(context);
+        if (mounted) {
+          MyDialog.showMessage(
+            context,
+            title: 'Error',
+            body: 'Failed to add the task',
+            posActionTitle: 'Ok',
+          );
         }
+
+        // if (context.mounted) {
+        //   Navigator.pop(context);
+        // }
       },
     );
   }
