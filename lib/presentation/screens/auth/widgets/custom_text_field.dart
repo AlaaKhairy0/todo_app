@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../core/utils/app_styles.dart';
 import '../../../../core/utils/colors_manager.dart';
+import '../../../../providers/theme_provider.dart';
 
 typedef Validator = String? Function(String?);
 
@@ -22,6 +24,7 @@ class CustomTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThemeProvider themeProvider = Provider.of(context);
     return TextFormField(
       obscureText: isHidden,
       keyboardType: keyboard,
@@ -54,7 +57,9 @@ class CustomTextField extends StatelessWidget {
           ),
         ),
         hintText: hint,
-        hintStyle: LightAppStyle.authHint,
+        hintStyle: themeProvider.isLightMode()
+            ? LightAppStyle.authHint
+            : DarkAppStyle.authHint,
       ),
     );
   }

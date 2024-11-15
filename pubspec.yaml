@@ -47,6 +47,8 @@ dependencies:
   intl: any
   flutter_localizations:
     sdk: flutter
+  provider: ^6.1.2
+  shared_preferences: ^2.2.3
 
 
 dev_dependencies:
@@ -65,6 +67,7 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
+  generate: true
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
@@ -175,8 +178,8 @@ flutter_native_splash:
   # The image_dark, color_dark, icon_background_color_dark, and branding_dark set values that
   # apply when the device is in dark mode. If they are not specified, the app will use the
   # parameters from above.
-  #image_dark: assets/android12splash-invert.png
-  #color_dark: "#042a49"
+  image_dark: assets/images/dark_app_logo.png
+  color_dark: "#060E1E"
   #icon_background_color_dark: "#eeeeee"
 
   # The android, ios and web parameters can be used to disable generating a splash screen on a given

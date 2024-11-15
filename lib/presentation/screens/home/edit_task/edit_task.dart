@@ -2,12 +2,16 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:todo_app/core/utils/app_styles.dart';
 import 'package:todo_app/core/utils/colors_manager.dart';
 import 'package:todo_app/core/utils/date_ex/date_ex.dart';
 import 'package:todo_app/core/utils/routes_manager.dart';
 import 'package:todo_app/database_manager/model/todo_dm.dart';
 import 'package:todo_app/database_manager/model/user_dm.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import '../../../../providers/theme_provider.dart';
 
 class EditTask extends StatefulWidget {
   const EditTask({super.key, required this.todo});
@@ -37,8 +41,10 @@ class _EditTaskState extends State<EditTask> {
 
   @override
   Widget build(BuildContext context) {
+    ThemeProvider themeProvider = Provider.of(context);
+
     return Scaffold(
-      appBar: AppBar(title: const Text('To Do List')),
+      appBar: AppBar(title: Text(AppLocalizations.of(context)!.appTitle)),
       body: Stack(children: [
         Container(
           color: ColorsManager.blue,
@@ -49,9 +55,9 @@ class _EditTaskState extends State<EditTask> {
           width: double.infinity,
           margin: REdgeInsets.symmetric(horizontal: 30),
           height: MediaQuery.of(context).size.height * .8,
-          decoration: const BoxDecoration(
-            color: ColorsManager.white,
-            borderRadius: BorderRadius.all(
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.onPrimary,
+            borderRadius: const BorderRadius.all(
               Radius.circular(15),
             ),
           ),
@@ -59,32 +65,46 @@ class _EditTaskState extends State<EditTask> {
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Center(
                 child: Text(
-              'Edit Task',
-              style: LightAppStyle.editingTaskTitle,
+              AppLocalizations.of(context)!.editTitle,
+              style: themeProvider.isLightMode()
+                  ? LightAppStyle.editingTaskTitle
+                  : DarkAppStyle.editingTaskTitle,
             )),
             const Spacer(
               flex: 2,
             ),
             TextFormField(
                 controller: titleController,
+                style: themeProvider.isLightMode()
+                    ? LightAppStyle.controller
+                    : DarkAppStyle.controller,
                 decoration: InputDecoration(
                     hintText: 'This is title',
-                    hintStyle: LightAppStyle.textFieldHint)),
+                    hintStyle: themeProvider.isLightMode()
+                        ? LightAppStyle.textFieldHint
+                        : DarkAppStyle.textFieldHint)),
             SizedBox(
               height: 16.h,
             ),
             TextFormField(
                 controller: descriptionController,
+                style: themeProvider.isLightMode()
+                    ? LightAppStyle.controller
+                    : DarkAppStyle.controller,
                 decoration: InputDecoration(
                     hintText: 'Task description',
-                    hintStyle: LightAppStyle.textFieldHint)),
+                    hintStyle: themeProvider.isLightMode()
+                        ? LightAppStyle.textFieldHint
+                        : DarkAppStyle.textFieldHint)),
             SizedBox(
               height: 24.h,
             ),
             Text(
-              'Select date',
+              AppLocalizations.of(context)!.selectDate,
               textAlign: TextAlign.start,
-              style: LightAppStyle.date,
+              style: themeProvider.isLightMode()
+                  ? LightAppStyle.date
+                  : DarkAppStyle.date,
             ),
             InkWell(
               onTap: () {
@@ -93,7 +113,9 @@ class _EditTaskState extends State<EditTask> {
               child: Center(
                 child: Text(
                   selectedDate.toFormattedDate,
-                  style: LightAppStyle.textFieldHint,
+                  style: themeProvider.isLightMode()
+                      ? LightAppStyle.textFieldHint
+                      : DarkAppStyle.textFieldHint,
                 ),
               ),
             ),
@@ -102,27 +124,26 @@ class _EditTaskState extends State<EditTask> {
             ),
             Center(
                 child: ElevatedButton(
-              onPressed: () {
-                editTaskOnFireStore(widget.todo);
-                Navigator.pushReplacementNamed(context, RoutesManager.home);
-              },
-              style: ButtonStyle(
-                  padding: MaterialStatePropertyAll(REdgeInsets.symmetric(
-                    horizontal: 40,
-                    vertical: 12,
-                  )),
-                  backgroundColor:
+                  onPressed: () {
+                    editTaskOnFireStore(widget.todo);
+                    Navigator.pushReplacementNamed(context, RoutesManager.home);
+                  },
+                  style: ButtonStyle(
+                      padding: MaterialStatePropertyAll(REdgeInsets.symmetric(
+                        horizontal: 40,
+                        vertical: 12,
+                      )),
+                      backgroundColor:
                       const MaterialStatePropertyAll(ColorsManager.blue),
-                  shape: const MaterialStatePropertyAll(RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(25))))),
-              child: Text(
-                'Save Changes',
-                style: GoogleFonts.inter(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w400,
-                ),
+                      shape: const MaterialStatePropertyAll(RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(25))))),
+                  child: Text(
+                AppLocalizations.of(context)!.saveButton,
+                style: themeProvider.isLightMode()
+                    ? LightAppStyle.saveButton
+                    : DarkAppStyle.saveButton,
               ),
-            )),
+                )),
             const Spacer(
               flex: 4,
             )

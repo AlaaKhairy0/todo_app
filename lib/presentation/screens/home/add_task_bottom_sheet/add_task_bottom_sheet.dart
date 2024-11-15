@@ -1,10 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todo_app/core/utils/app_styles.dart';
+import 'package:todo_app/core/utils/colors_manager.dart';
 import 'package:todo_app/core/utils/date_ex/date_ex.dart';
 import 'package:todo_app/core/utils/dialogs/dialogs.dart';
 import 'package:todo_app/database_manager/model/todo_dm.dart';
 import 'package:todo_app/database_manager/model/user_dm.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import '../../../../providers/theme_provider.dart';
 
 class AddTaskBottomSheet extends StatefulWidget {
   const AddTaskBottomSheet({super.key});
@@ -37,6 +42,7 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
+    ThemeProvider themeProvider = Provider.of(context);
     return Form(
       key: formKey,
       child: Container(
@@ -45,44 +51,58 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
         child:
             Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
           Text(
-            'Add New Task',
+            AppLocalizations.of(context)!.addTask,
             textAlign: TextAlign.center,
-            style: LightAppStyle.bottomSheetTitle,
+            style: themeProvider.isLightMode()
+                ? LightAppStyle.bottomSheetTitle
+                : DarkAppStyle.bottomSheetTitle,
           ),
           const SizedBox(
             height: 8,
           ),
           TextFormField(
+            style: themeProvider.isLightMode()
+                ? LightAppStyle.controller
+                : DarkAppStyle.controller,
             validator: (value) {
               if (value == null || value.trim().isEmpty)
                 return 'Enter task title';
             },
             controller: titleController,
             decoration: InputDecoration(
-              hintText: 'Enter your task title',
-              hintStyle: LightAppStyle.textFieldHint,
+              hintText: AppLocalizations.of(context)!.titleHint,
+              hintStyle: themeProvider.isLightMode()
+                  ? LightAppStyle.textFieldHint
+                  : DarkAppStyle.textFieldHint,
             ),
           ),
           const SizedBox(
             height: 8,
           ),
           TextFormField(
+            style: themeProvider.isLightMode()
+                ? LightAppStyle.controller
+                : DarkAppStyle.controller,
             validator: (value) {
               if (value == null || value.trim().isEmpty)
                 return 'Enter task description';
             },
             controller: descriptionController,
             decoration: InputDecoration(
-              hintText: 'Enter your task description',
-              hintStyle: LightAppStyle.textFieldHint,
+              hintText: AppLocalizations.of(context)!.descriptionHint,
+              hintStyle: themeProvider.isLightMode()
+                  ? LightAppStyle.textFieldHint
+                  : DarkAppStyle.textFieldHint,
             ),
           ),
           const SizedBox(
             height: 16,
           ),
           Text(
-            'Select date',
-            style: LightAppStyle.date,
+            AppLocalizations.of(context)!.selectDate,
+            style: themeProvider.isLightMode()
+                ? LightAppStyle.date
+                : DarkAppStyle.date,
           ),
           InkWell(
             onTap: () {
@@ -91,17 +111,21 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
             child: Text(
               // formattedDate(selectedDate),
               selectedDate.toFormattedDate,
-              style: LightAppStyle.textFieldHint,
+              style: themeProvider.isLightMode()
+                  ? LightAppStyle.textFieldHint
+                  : DarkAppStyle.textFieldHint,
               textAlign: TextAlign.center,
             ),
           ),
           const Spacer(),
           ElevatedButton(
+            style:
+                ElevatedButton.styleFrom(backgroundColor: ColorsManager.blue),
             onPressed: () {
               addTaskToFireStore();
               MyDialog.showLoading(context, text: 'Waiting...');
             },
-            child: const Text('Add Task'),
+            child: Text(AppLocalizations.of(context)!.addButton),
           ),
         ]),
       ),

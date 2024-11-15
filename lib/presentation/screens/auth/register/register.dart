@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 import 'package:todo_app/core/utils/app_styles.dart';
 import 'package:todo_app/core/utils/assets_manager.dart';
 import 'package:todo_app/core/utils/colors_manager.dart';
@@ -13,8 +13,9 @@ import 'package:todo_app/core/utils/routes_manager.dart';
 import 'package:todo_app/core/utils/strings_manager.dart';
 import 'package:todo_app/database_manager/model/user_dm.dart';
 import 'package:todo_app/presentation/screens/auth/widgets/custom_text_field.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../../../core/utils/email_validation.dart';
+import '../../../../providers/theme_provider.dart';
 
 class Register extends StatefulWidget {
   const Register({super.key});
@@ -54,8 +55,9 @@ class _RegisterState extends State<Register> {
 
   @override
   Widget build(BuildContext context) {
+    ThemeProvider themeProvider = Provider.of(context);
     return Scaffold(
-      backgroundColor: ColorsManager.blue,
+      backgroundColor: Theme.of(context).colorScheme.primary,
       body: Padding(
         padding: REdgeInsets.all(20),
         child: Form(
@@ -76,12 +78,15 @@ class _RegisterState extends State<Register> {
               SizedBox(
                 height: 16.h,
               ),
-              Text('Full name', style: LightAppStyle.authTitle),
+              Text(AppLocalizations.of(context)!.fullName,
+                  style: themeProvider.isLightMode()
+                      ? LightAppStyle.authTitle
+                      : DarkAppStyle.authTitle),
               SizedBox(
                 height: 6.h,
               ),
               CustomTextField(
-                hint: ConstantsManager.fullName,
+                hint: AppLocalizations.of(context)!.fullNameHint,
                 controller: fullNameController,
                 keyboard: TextInputType.name,
                 validator: (input) {
@@ -93,12 +98,15 @@ class _RegisterState extends State<Register> {
               SizedBox(
                 height: 8.h,
               ),
-              Text('User name', style: LightAppStyle.authTitle),
+              Text(AppLocalizations.of(context)!.userName,
+                  style: themeProvider.isLightMode()
+                      ? LightAppStyle.authTitle
+                      : DarkAppStyle.authTitle),
               SizedBox(
                 height: 6.h,
               ),
               CustomTextField(
-                hint: ConstantsManager.userName,
+                hint: AppLocalizations.of(context)!.userNameHint,
                 controller: userNameController,
                 keyboard: TextInputType.name,
                 validator: (input) {
@@ -110,12 +118,15 @@ class _RegisterState extends State<Register> {
               SizedBox(
                 height: 8.h,
               ),
-              Text('Email', style: LightAppStyle.authTitle),
+              Text(AppLocalizations.of(context)!.email,
+                  style: themeProvider.isLightMode()
+                      ? LightAppStyle.authTitle
+                      : DarkAppStyle.authTitle),
               SizedBox(
                 height: 6.h,
               ),
               CustomTextField(
-                hint: ConstantsManager.email,
+                hint: AppLocalizations.of(context)!.emailHint,
                 controller: emailController,
                 keyboard: TextInputType.emailAddress,
                 validator: (input) {
@@ -130,12 +141,15 @@ class _RegisterState extends State<Register> {
               SizedBox(
                 height: 8.h,
               ),
-              Text('Password', style: LightAppStyle.authTitle),
+              Text(AppLocalizations.of(context)!.password,
+                  style: themeProvider.isLightMode()
+                      ? LightAppStyle.authTitle
+                      : DarkAppStyle.authTitle),
               SizedBox(
                 height: 6.h,
               ),
               CustomTextField(
-                hint: ConstantsManager.password,
+                hint: AppLocalizations.of(context)!.passwordHint,
                 controller: passwordController,
                 keyboard: TextInputType.visiblePassword,
                 isHidden: true,
@@ -148,12 +162,15 @@ class _RegisterState extends State<Register> {
               SizedBox(
                 height: 8.h,
               ),
-              Text('Confirm password', style: LightAppStyle.authTitle),
+              Text(AppLocalizations.of(context)!.confirmPassword,
+                  style: themeProvider.isLightMode()
+                      ? LightAppStyle.authTitle
+                      : DarkAppStyle.authTitle),
               SizedBox(
                 height: 6.h,
               ),
               CustomTextField(
-                hint: ConstantsManager.confirmPassword,
+                hint: AppLocalizations.of(context)!.confirmPasswordHint,
                 controller: confirmPasswordController,
                 keyboard: TextInputType.visiblePassword,
                 isHidden: true,
@@ -172,17 +189,19 @@ class _RegisterState extends State<Register> {
                 child: ElevatedButton(
                     style: const ButtonStyle(
                         backgroundColor:
-                            MaterialStatePropertyAll(ColorsManager.white),
+                        MaterialStatePropertyAll(ColorsManager.white),
                         shape: MaterialStatePropertyAll(RoundedRectangleBorder(
                             side: BorderSide(color: ColorsManager.white),
                             borderRadius:
-                                BorderRadius.all(Radius.circular(15))))),
+                            BorderRadius.all(Radius.circular(15))))),
                     onPressed: () {
                       register();
                     },
                     child: Text(
-                      'Sign up',
-                      style: LightAppStyle.authButton,
+                      AppLocalizations.of(context)!.signUp,
+                      style: themeProvider.isLightMode()
+                          ? LightAppStyle.authButton
+                          : DarkAppStyle.authButton,
                     )),
               ),
               SizedBox(
@@ -190,14 +209,16 @@ class _RegisterState extends State<Register> {
               ),
               Center(
                   child: GestureDetector(
-                onTap: () {
-                  Navigator.pushReplacementNamed(context, RoutesManager.login);
-                },
-                child: Text(
-                  'Already have an account? Login',
-                  style: LightAppStyle.haveAccount,
+                    onTap: () {
+                      Navigator.pushReplacementNamed(context, RoutesManager.login);
+                    },
+                    child: Text(
+                  AppLocalizations.of(context)!.haveAccount,
+                  style: themeProvider.isLightMode()
+                      ? LightAppStyle.haveAccount
+                      : DarkAppStyle.haveAccount,
                 ),
-              )),
+                  )),
             ]),
           ),
         ),

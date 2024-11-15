@@ -9,7 +9,7 @@ class AppTheme {
         primary: ColorsManager.blue,
         onPrimary: ColorsManager.white,
       ),
-      scaffoldBackgroundColor: ColorsManager.scaffoldBg,
+      scaffoldBackgroundColor: ColorsManager.lightScaffoldBg,
       appBarTheme: AppBarTheme(
         elevation: 0,
         color: ColorsManager.blue,
@@ -46,5 +46,47 @@ class AppTheme {
           ),
         ),
       ));
-  static ThemeData dark = ThemeData();
+  static ThemeData dark = ThemeData(
+      colorScheme: ColorScheme.fromSeed(
+        seedColor: ColorsManager.blue,
+        primary: ColorsManager.darkScaffoldBg,
+        onPrimary: ColorsManager.darkGrey,
+      ),
+      scaffoldBackgroundColor: ColorsManager.darkScaffoldBg,
+      appBarTheme: AppBarTheme(
+        elevation: 0,
+        color: ColorsManager.blue,
+        titleTextStyle: DarkAppStyle.appBar,
+      ),
+      bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+        type: BottomNavigationBarType.fixed,
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        showUnselectedLabels: false,
+        showSelectedLabels: true,
+        unselectedItemColor: ColorsManager.white,
+        selectedItemColor: ColorsManager.blue,
+        selectedIconTheme: IconThemeData(size: 36),
+        unselectedIconTheme: IconThemeData(size: 36),
+      ),
+      bottomAppBarTheme: const BottomAppBarTheme(
+          shape: CircularNotchedRectangle(), color: ColorsManager.darkGrey),
+      floatingActionButtonTheme: const FloatingActionButtonThemeData(
+          backgroundColor: ColorsManager.blue,
+          iconSize: 28,
+          shape: StadiumBorder(
+            side: BorderSide(
+              color: ColorsManager.darkGrey,
+              width: 4,
+            ),
+          )),
+      bottomSheetTheme: const BottomSheetThemeData(
+        backgroundColor: ColorsManager.darkGrey,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            topRight: Radius.circular(15),
+            topLeft: Radius.circular(15),
+          ),
+        ),
+      ));
 }

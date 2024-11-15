@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 import 'package:todo_app/core/utils/app_styles.dart';
 import 'package:todo_app/core/utils/assets_manager.dart';
 import 'package:todo_app/core/utils/colors_manager.dart';
@@ -13,6 +14,9 @@ import 'package:todo_app/database_manager/model/user_dm.dart';
 import 'package:todo_app/presentation/screens/auth/widgets/custom_text_field.dart';
 import '../../../../core/utils/dialogs/dialogs.dart';
 import '../../../../core/utils/email_validation.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import '../../../../providers/theme_provider.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -43,8 +47,9 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
+    ThemeProvider themeProvider = Provider.of(context);
     return Scaffold(
-      backgroundColor: ColorsManager.blue,
+      backgroundColor: Theme.of(context).colorScheme.primary,
       body: Padding(
         padding: REdgeInsets.all(20),
         child: Form(
@@ -65,12 +70,15 @@ class _LoginState extends State<Login> {
               SizedBox(
                 height: 120.h,
               ),
-              Text('Email', style: LightAppStyle.authTitle),
+              Text(AppLocalizations.of(context)!.email,
+                  style: themeProvider.isLightMode()
+                      ? LightAppStyle.authTitle
+                      : DarkAppStyle.authTitle),
               SizedBox(
                 height: 6.h,
               ),
               CustomTextField(
-                hint: ConstantsManager.email,
+                hint: AppLocalizations.of(context)!.emailHint,
                 controller: emailController,
                 keyboard: TextInputType.emailAddress,
                 validator: (input) {
@@ -85,12 +93,15 @@ class _LoginState extends State<Login> {
               SizedBox(
                 height: 8.h,
               ),
-              Text('Password', style: LightAppStyle.authTitle),
+              Text(AppLocalizations.of(context)!.password,
+                  style: themeProvider.isLightMode()
+                      ? LightAppStyle.authTitle
+                      : DarkAppStyle.authTitle),
               SizedBox(
                 height: 6.h,
               ),
               CustomTextField(
-                hint: ConstantsManager.password,
+                hint: AppLocalizations.of(context)!.passwordHint,
                 controller: passwordController,
                 keyboard: TextInputType.visiblePassword,
                 isHidden: true,
@@ -109,17 +120,19 @@ class _LoginState extends State<Login> {
                 child: ElevatedButton(
                     style: const ButtonStyle(
                         backgroundColor:
-                            MaterialStatePropertyAll(ColorsManager.white),
+                        MaterialStatePropertyAll(ColorsManager.white),
                         shape: MaterialStatePropertyAll(RoundedRectangleBorder(
                             side: BorderSide(color: ColorsManager.white),
                             borderRadius:
-                                BorderRadius.all(Radius.circular(15))))),
+                            BorderRadius.all(Radius.circular(15))))),
                     onPressed: () {
                       login();
                     },
                     child: Text(
-                      'Login',
-                      style: LightAppStyle.authButton,
+                      AppLocalizations.of(context)!.login,
+                      style: themeProvider.isLightMode()
+                          ? LightAppStyle.authButton
+                          : DarkAppStyle.authButton,
                     )),
               ),
               SizedBox(
@@ -127,15 +140,17 @@ class _LoginState extends State<Login> {
               ),
               Center(
                   child: GestureDetector(
-                onTap: () {
-                  Navigator.pushReplacementNamed(
-                      context, RoutesManager.register);
-                },
-                child: Text(
-                  'Don’t have an account? Create Account',
-                  style: LightAppStyle.haveAccount,
+                    onTap: () {
+                      Navigator.pushReplacementNamed(
+                          context, RoutesManager.register);
+                    },
+                    child: Text(
+                  AppLocalizations.of(context)!.createAccount,
+                  style: themeProvider.isLightMode()
+                      ? LightAppStyle.haveAccount
+                      : DarkAppStyle.haveAccount,
                 ),
-              )),
+                  )),
             ]),
           ),
         ),
