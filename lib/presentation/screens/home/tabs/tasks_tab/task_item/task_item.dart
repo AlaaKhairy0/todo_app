@@ -6,12 +6,14 @@ import 'package:provider/provider.dart';
 import 'package:todo_app/core/utils/app_styles.dart';
 import 'package:todo_app/core/utils/colors_manager.dart';
 import 'package:todo_app/core/utils/dialogs/dialogs.dart';
-import 'package:todo_app/core/utils/routes_manager.dart';
 import 'package:todo_app/database_manager/model/todo_dm.dart';
 import 'package:todo_app/database_manager/model/user_dm.dart';
 import 'package:todo_app/presentation/screens/home/edit_task/edit_task.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../../../../../providers/theme_provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TaskItem extends StatelessWidget {
   TaskItem(
@@ -128,7 +130,7 @@ class TaskItem extends StatelessWidget {
                 const Spacer(),
                 todo.isDone
                     ? Text(
-                        'Done!',
+                  AppLocalizations.of(context)!.done,
                         style: themeProvider.isLightMode()
                             ? LightAppStyle.doneStatus
                             : DarkAppStyle.doneStatus,

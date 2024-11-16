@@ -26,6 +26,7 @@
 "selectDate":"Select date",
 "addButton":"Add Task",
 "saveButton":"Save Changes",
-"editTitle":"Edit Task"
+"editTitle":"Edit Task",
+"done":"Done!"
 
 }

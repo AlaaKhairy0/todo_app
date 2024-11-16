@@ -26,5 +26,6 @@
  "selectDate":"اختر تاريخ",
  "addButton":"اضف المهمة",
  "saveButton":"حفظ التغييرات",
- "editTitle":"تعديل المهمة"
+ "editTitle":"تعديل المهمة",
+ "done":"!تم"
  }
