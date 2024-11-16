@@ -10,4 +10,5 @@ class ColorsManager {
   static const Color red = Color(0xFFEC4B4B);
   static const Color darkScaffoldBg = Color(0xFF060E1E);
   static const Color darkGrey = Color(0xFF141922);
+  static const Color green = Color(0xFF61E757);
 }

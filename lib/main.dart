@@ -17,8 +17,8 @@ void main() async {
       ),
       ChangeNotifierProvider(
         create: (context) => LanguageProvider()..getLang(),
-      )
+      ),
     ],
-    child: const MyApp(),
+    child: MyApp(),
   ));
 }

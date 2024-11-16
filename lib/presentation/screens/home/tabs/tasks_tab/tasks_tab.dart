@@ -44,10 +44,14 @@ class TasksTabState extends State<TasksTab> {
                 child: ListView.builder(
               itemCount: tasksList.length,
               itemBuilder: (context, index) => TaskItem(
-                  todo: tasksList[index],
-                  onDelete: () {
-                    getTasksFromFireStore();
-                  }),
+                todo: tasksList[index],
+                onDelete: () {
+                  getTasksFromFireStore();
+                },
+                onUpdate: () {
+                  getTasksFromFireStore();
+                },
+              ),
             )),
           ],
         ),

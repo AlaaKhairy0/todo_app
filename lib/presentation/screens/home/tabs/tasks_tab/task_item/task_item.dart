@@ -14,10 +14,15 @@ import 'package:todo_app/presentation/screens/home/edit_task/edit_task.dart';
 import '../../../../../../providers/theme_provider.dart';
 
 class TaskItem extends StatelessWidget {
-  TaskItem({super.key, required this.todo, required this.onDelete});
+  TaskItem(
+      {super.key,
+      required this.todo,
+      required this.onDelete,
+      required this.onUpdate});
 
   ToDoDM todo;
   Function onDelete;
+  Function onUpdate;
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +90,8 @@ class TaskItem extends StatelessWidget {
                   height: 62.h,
                   width: 4.w,
                   decoration: BoxDecoration(
-                    color: ColorsManager.blue,
+                    color:
+                        todo.isDone ? ColorsManager.green : ColorsManager.blue,
                     borderRadius: BorderRadius.all(
                       Radius.circular(10.r),
                     ),
@@ -100,9 +106,13 @@ class TaskItem extends StatelessWidget {
                   children: [
                     Text(
                       todo.title,
-                      style: themeProvider.isLightMode()
-                          ? LightAppStyle.taskItemTitle
-                          : DarkAppStyle.taskItemTitle,
+                      style: todo.isDone
+                          ? themeProvider.isLightMode()
+                              ? LightAppStyle.taskItemDoneTitle
+                              : DarkAppStyle.taskItemDoneTitle
+                          : themeProvider.isLightMode()
+                              ? LightAppStyle.taskItemTitle
+                              : DarkAppStyle.taskItemTitle,
                     ),
                     SizedBox(
                       height: 2.h,
@@ -116,21 +126,34 @@ class TaskItem extends StatelessWidget {
                   ],
                 ),
                 const Spacer(),
-                Container(
-                  padding: REdgeInsets.symmetric(
-                    horizontal: 20,
-                    vertical: 8,
-                  ),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(10.r),
-                      ),
-                      color: ColorsManager.blue),
-                  child: const Icon(
-                    Icons.check,
-                    color: ColorsManager.white,
-                  ),
-                )
+                todo.isDone
+                    ? Text(
+                        'Done!',
+                        style: themeProvider.isLightMode()
+                            ? LightAppStyle.doneStatus
+                            : DarkAppStyle.doneStatus,
+                      )
+                    : InkWell(
+                        onTap: () {
+                          updateStatus(todo);
+                          onUpdate();
+                        },
+                        child: Container(
+                          padding: REdgeInsets.symmetric(
+                            horizontal: 20,
+                            vertical: 8,
+                          ),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(10.r),
+                              ),
+                              color: ColorsManager.blue),
+                          child: const Icon(
+                            Icons.check,
+                            color: ColorsManager.white,
+                          ),
+                        ),
+                      )
               ],
             ),
           ),
@@ -154,5 +177,14 @@ class TaskItem extends StatelessWidget {
     //   MyDialog.hide(context);
     //   MyDialog.showMessage(context,posActionTitle: 'Ok',body: 'Task deleted successfully');
     // }
+  }
+
+  Future<void> updateStatus(ToDoDM todo) async {
+    CollectionReference collectionReference = FirebaseFirestore.instance
+        .collection(UserDM.collectionName)
+        .doc(UserDM.currentUser!.id)
+        .collection(ToDoDM.collectionName);
+    DocumentReference documentReference = collectionReference.doc(todo.id);
+    await documentReference.update({'isDone': true});
   }
 }

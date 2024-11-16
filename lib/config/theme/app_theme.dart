@@ -4,6 +4,10 @@ import 'package:todo_app/core/utils/colors_manager.dart';
 
 class AppTheme {
   static ThemeData light = ThemeData(
+      datePickerTheme: DatePickerThemeData(
+        backgroundColor: ColorsManager.white,
+        headerBackgroundColor: ColorsManager.blue,
+      ),
       colorScheme: ColorScheme.fromSeed(
         seedColor: ColorsManager.blue,
         primary: ColorsManager.blue,
@@ -47,6 +51,14 @@ class AppTheme {
         ),
       ));
   static ThemeData dark = ThemeData(
+      datePickerTheme: DatePickerThemeData(
+        rangePickerHeaderForegroundColor: ColorsManager.white,
+        dayForegroundColor: MaterialStatePropertyAll(ColorsManager.white),
+        backgroundColor: ColorsManager.darkGrey,
+        headerBackgroundColor: ColorsManager.blue,
+        todayBackgroundColor: MaterialStatePropertyAll(ColorsManager.blue),
+        dayOverlayColor: MaterialStatePropertyAll(ColorsManager.white),
+      ),
       colorScheme: ColorScheme.fromSeed(
         seedColor: ColorsManager.blue,
         primary: ColorsManager.darkScaffoldBg,

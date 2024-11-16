@@ -79,6 +79,13 @@ class LightAppStyle {
   );
   static TextStyle saveButton = GoogleFonts.inter(
       fontSize: 18, fontWeight: FontWeight.w400, color: ColorsManager.white);
+  static TextStyle doneStatus = GoogleFonts.poppins(
+      fontSize: 22, fontWeight: FontWeight.w700, color: ColorsManager.green);
+  static TextStyle taskItemDoneTitle = GoogleFonts.poppins(
+    color: ColorsManager.green,
+    fontSize: 18.sp,
+    fontWeight: FontWeight.w700,
+  );
 }
 
 class DarkAppStyle {
@@ -156,4 +163,11 @@ class DarkAppStyle {
   );
   static TextStyle saveButton = GoogleFonts.inter(
       fontSize: 18, fontWeight: FontWeight.w400, color: ColorsManager.white);
+  static TextStyle doneStatus = GoogleFonts.poppins(
+      fontSize: 22, fontWeight: FontWeight.w700, color: ColorsManager.green);
+  static TextStyle taskItemDoneTitle = GoogleFonts.poppins(
+    color: ColorsManager.green,
+    fontSize: 18.sp,
+    fontWeight: FontWeight.w700,
+  );
 }

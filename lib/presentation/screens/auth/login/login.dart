@@ -15,7 +15,6 @@ import 'package:todo_app/presentation/screens/auth/widgets/custom_text_field.dar
 import '../../../../core/utils/dialogs/dialogs.dart';
 import '../../../../core/utils/email_validation.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
 import '../../../../providers/theme_provider.dart';
 
 class Login extends StatefulWidget {
